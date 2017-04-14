@@ -1,0 +1,125 @@
+
+// For gradien
+@mixin gradient($from, $to) {
+  /* fallback/image non-cover color */
+  background-color: $from;
+
+  /* Firefox 3.6+ */
+  background-image: -moz-linear-gradient($from, $to);
+
+  /* Safari 4+, Chrome 1+ */
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
+
+  /* Safari 5.1+, Chrome 10+ */
+  background-image: -webkit-linear-gradient($from, $to);
+
+  /* Opera 11.10+ */
+  background-image: -o-linear-gradient($from, $to);
+}
+
+// generic transform
+@mixin transform($transforms) {
+   -moz-transform: $transforms;
+     -o-transform: $transforms;
+    -ms-transform: $transforms;
+-webkit-transform: $transforms;
+      transform: $transforms;
+}
+// translate
+@mixin translate ($x, $y) {
+   @include transform(translate($x, $y));
+}
+// rotate
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+@mixin transition-property($property...) {
+    -moz-transition-property:    $property;
+    -o-transition-property:      $property;
+    -webkit-transition-property: $property;
+    transition-property:         $property;
+}
+@mixin transition-duration($duration...) {
+    -moz-transition-property:    $duration;
+    -o-transition-property:      $duration;
+    -webkit-transition-property: $duration;
+    transition-property:         $duration;
+}
+@mixin transition-timing-function($timing...) {
+    -moz-transition-timing-function:    $timing;
+    -o-transition-timing-function:      $timing;
+    -webkit-transition-timing-function: $timing;
+    transition-timing-function:         $timing;
+}
+@mixin transition-delay($delay...) {
+    -moz-transition-delay:    $delay;
+    -o-transition-delay:      $delay;
+    -webkit-transition-delay: $delay;
+    transition-delay:         $delay;
+}
+
+// Animation
+
+@mixin keyframes($animationName) {
+    @-webkit-keyframes #{$animationName} {
+        $browser: '-webkit-' !global;
+        @content;
+    }
+    @-moz-keyframes #{$animationName} {
+        $browser: '-moz-' !global;
+        @content;
+    }
+    @-o-keyframes #{$animationName} {
+        $browser: '-o-' !global;
+        @content;
+    }
+    @keyframes #{$animationName} {
+        $browser: '' !global;
+        @content;
+    }
+} $browser: null;
+@mixin animation($animate...) {
+$max: length($animate);
+$animations: '';
+
+@for $i from 1 through $max {
+    $animations: #{$animations + nth($animate, $i)};
+
+    @if $i < $max {
+        $animations: #{$animations + ", "};
+    }
+}
+-webkit-animation: $animations;
+-moz-animation:    $animations;
+-o-animation:      $animations;
+animation:         $animations;
+}
+
+@include keyframes(bounce) {
+   
+   0%, 20%, 50%, 80%, 100% {
+    #{$browser}transform: translateY(0);
+  }
+  40% {
+    #{$browser}transform: translateY(-30px);
+  }
+  60% {
+    #{$browser}transform: translateY(-15px);
+  }
+}
+
+@mixin itemBox{
+  background:$white;
+  border-radius:3px;
+  box-shadow: 5px 8px 10px -1px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 5px 8px 10px -1px rgba(0,0,0,0.3);
+  -moz-box-shadow: 5px 8px 10px -1px rgba(0,0,0,0.3);
+  -o-box-shadow: 5px 8px 10px -1px rgba(0,0,0,0.3);
+}

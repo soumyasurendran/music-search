@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MusicSearch">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">   
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
+
+    <title>Music Search</title>
+
+    <!-- Main CSS -->
+    <link href="assets/scss/style.css" rel="stylesheet">
+    <link href="assets/scss/custom.css" rel="stylesheet">
+    
+    <script type="text/javascript" src="assets/lib/jquery-1.12.4.min.js"></script>
+    
+
+    <!--FOR DEVELOPMENT-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+
+ 
+    <script type="text/javascript" src="assets/lib/general.js"></script>  
+
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="assets/js/services.js"></script>
+    <script type="text/javascript" src="assets/js/common.js"></script>
+    <script type="text/javascript" src="assets/js/directives.js"></script>
+    <script type="text/javascript" src="assets/js/filters.js"></script>
+
+    <!--dashboard references-->
+    <script type="text/javascript" src="app/dashboard/DashboardCtrl.js"></script>
+
+    <!--test files-->
+     <script type="text/javascript" src="tests/services.spec.js"></script>
+    <script type="text/javascript" src="tests/DashboardCtrl.spec.js"></script>
+    
+  </head>
+
+  <body ng-controller="DashboardCtrl as dashboard" ng-cloak>
+  <header>
+    <div id="banner">
+      <h1 class="logo">
+        <a href="index.html" title="Geek Label">
+          <img src="assets/images/logo.png" class="show-sm" alt="Geek Label"/>
+          <img src="assets/images/gl-logo.png" class="hidden-sm" alt="Geek Label"/>
+        </a>
+      </h1>
+      <span class="powered-by">Powered by Spotify</span>
+      <div class="banner-inner">
+        <img src="assets/images/hero-img.png" alt="" />
+      </div>      
+      <a href="#search" class="down-arrow"><img src="assets/images/down-arrow.png" alt=""/></a>
+    </div>
+  </header>
+  <section id="search" class="search">
+    <form class="search-form">
+      <div class="search-div">
+        <input type="text" placeholder="Search for artist or album title" value="" ng-model="dashboard.name"  class="search-input" autofocus on-enter="dashboard.searchMusic()"/>
+        <input type="submit" value="Search" class="search-btn" ng-click="dashboard.searchMusic()" />
+      </div>
+    </form>
+  </section>  
+  <section class="search-result">
+    <div class="no-result"  ng-if="dashboard.allMusicItems == ''">
+      <img src="assets/images/magnify.png" alt="Search" />
+      <p ng-if="dashboard.noResult == ''">Your results will appear here</p>
+      <p ng-if="dashboard.noResult">No search result found. Please try again.</p>
+    </div>
+    <div class="container" ng-if="dashboard.allMusicItems">
+      <div class="row" ng-repeat="a in dashboard.searchRange(dashboard.allMusicLen) track by $index">
+        <div class="col-3" ng-repeat="item in dashboard.allMusicItems.slice($index*4,$index*4+4) track by item.id">
+          <a href="#" data-popup-open="{{item.type}}" ng-click="dashboard.openPopup(item,$event)">
+            <div class="item" data-item="{{item.type}}">        
+              <div class="item-img">
+                  <img ng-if="item.images.length" bn-lazy-src="{{item.images[0].url}}" alt="" class="img-responsive" />
+                  <span class="{{item.type}}-icon"></span>
+                  <div class="overlay">
+                    <img src="assets/images/bitmap.png" alt=""/>                  
+                    <p >View {{item.type}}</p>
+                  </div>
+              </div>
+              <div class="caption">{{item.name}}</div>
+            </div>   
+          </a>   
+        </div>
+      </div>
+      <div class="text-center">
+        <a href="javascript:void()" ng-if="dashboard.noMore" class="load-more" ng-click="dashboard.showMore()">Show me More!</a>
+      </div>
+    </div>
+  </section>
+  <div class="popup" data-popup="artist">
+    <div class="popup-inner">
+        <div class="header clearfix">
+          <div class="img">
+            <img ng-src="{{dashboard.selectedItemImage}}" class="img-responsive" alt="">
+            <div class="overlay"></div>
+          </div>
+          <h1 class="title"><span>Albums by</span>{{dashboard.selectedName}}</h1>          
+        </div>
+        <div class="popup-body">
+          <h3 class="subtitle">Albums</h3>
+          <ul class="item-list artist clearfix">
+            <li ng-repeat = "album in dashboard.artistAlbums|limitTo : 5">
+              <div class="thumb-img">
+                <img ng-src="{{album.images[2].url}}"  alt="">
+              </div>
+              <div class="item-info">
+                <h2 class="album-title" data-popup-open="album" ng-click="dashboard.openPopup(album,$event)">{{album.name}}</h2>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <a class="popup-close" data-popup-close="artist" href="#" ng-click="dashboard.closePopup($event)"></a>
+    </div>
+  </div>
+  <div class="popup" data-popup="album">
+    <div class="popup-inner">
+        <div class="header clearfix">
+          <div class="img">
+            <img ng-src="{{dashboard.selectedItemImage}}" class="img-responsive" alt="">
+            <div class="overlay"></div>
+          </div>
+          <h1 class="title"><span>Tracks on</span>{{dashboard.selectedName}}</h1>          
+        </div>
+        <div class="popup-body">
+          <h3 class="subtitle">Tracks</h3>
+          <ul class="item-list clearfix">
+            <li ng-repeat = "track in dashboard.albumTracks | limitTo : 5">
+                <h2 class="track-title">{{track.name}}</h2>
+                <span class="duration">{{track.duration_ms | minsec}}</span>              
+            </li>
+          </ul>
+        </div>
+        <a class="popup-close" data-popup-close="album" href="#" ng-click="dashboard.closePopup($event)"></a>
+    </div>
+  </div>
+  <footer>
+    <p><span>Designed by Geek Label</span> <em>-</em> <span><a style="color:white" href="https://www.spotify.com" target="_blank">Powered by Spotify</a></span></p>
+  </footer>
+  <div class="modal"></div>
+  <script>
+    $(document).mouseup(function (e) {
+      var saveClick = e.target;
+      var $popup = $(".popup");
+      if($('body').hasClass('modal-open')){
+        $.each( $popup , function( key, value ) {
+            if(value == saveClick){ 
+              $('body').removeClass('modal-open');
+              $('[data-popup="artist"]').fadeOut(350); 
+              $('[data-popup="album"]').fadeOut(350); 
+            }
+        });
+      }
+    });
+  </script>
+  </body>
+</html>

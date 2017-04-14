@@ -1,0 +1,553 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800,900');
+
+// Core variables and mixins
+@import "assets/variables";
+
+// Reset and dependencies
+@import "assets/normalize";
+@import "assets/mixins";
+
+body {
+  font-family: $font-family-base;
+  font-size: $body-font-size;
+  background: $lightkBlue;
+  color: $white;
+}
+/* ==============================================
+  Base CSS
+ ============================================== */
+a {
+  @include transition(all 0.5s ease);
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+/* ==============================================
+  Banner CSS
+ ============================================== */
+#banner {
+  @include gradient($pink, $pinkDark);
+  height: 100vh;
+  position: relative;
+  padding: 0;  
+  @media screen and (max-width: $screen-sm-max) {
+    img {
+      max-width: 400px;
+    }
+  }
+  @media screen and (max-width: $screen-xs-max) {
+    img {
+      max-width: 280px;
+    }
+  }
+}
+.down-arrow {
+  position: absolute;
+  left: 50%;
+  bottom: 38px;
+  margin-left: -22px;
+  @include animation('bounce 3s infinite');
+}
+.banner-inner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  @include transform(translate(-50%,-50%));
+}
+.img-responsive {
+  width: 100%;
+  max-width: 100%;
+  display: inline-block;
+}
+
+/* ==============================================
+  Header CSS
+ ============================================== */
+ header {
+  color: $white;
+  .logo {
+    margin: 34px 30px;
+    float: left;
+    @media screen and (max-width: $screen-sm-max) {
+      img {
+        width: 30px;
+      }
+    }  
+  }
+}
+.powered-by {
+  float: right;
+  margin: 34px 30px;
+}
+.text-center {
+  text-align: center;
+}
+@media screen and (max-width: $screen-sm-max) {
+  .hidden-sm {
+    display:none
+  }
+  .show-sm {
+    display:block
+  }
+}
+@media screen and (min-width: $break-small) {
+  .hidden-sm {
+    display:block;
+  }
+  .show-sm {
+    display:none;
+  }
+}
+
+/* ==============================================
+  Search Form CSS
+ ============================================== */
+.search {
+  background:$darkBlue;
+  padding: 15px 20px;
+  @media screen and (max-width: $screen-xs-max) {
+    min-height: 118px;
+  }
+}
+.search-div {
+  background: $white;
+  border-radius: 25px;
+  height: 50px;
+  padding: 0 128px 0 24px;
+  line-height: 50px;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  .search-input {
+    border: none;
+    width: 100%;
+    color: $dark;
+  }
+  .search-btn {
+    background: $darkPink;
+    border-radius: 25px;
+    padding: 5px 25px;
+    color: $white;
+    border: none;
+    height: 40px;
+    position: absolute;
+    right: 5px;
+    text-transform: uppercase;
+    top: 5px;
+    @include transition(all 0.5s ease);
+    &:hover,&:focus {
+      background: darken($darkPink, 15%)
+    }
+  }
+  @media screen and (max-width: $screen-xs-max) {
+    padding: 0 24px;
+    text-align: center; 
+    .search-btn {
+      position: relative;
+      display: inline-block;
+      min-width: 160px;
+      right: auto;
+      top: auto;
+      margin: 15px 0;
+      height: 50px;
+    }   
+  }
+} 
+.search-result { 
+  background: #383a49;
+  .container{
+    padding:30px 15px;
+    @media screen and (max-width: $screen-sm-max) {      
+      .col-3 {
+        width: 48%;
+        margin: 0;
+        &:nth-child(2n) {
+          margin-left: 3%;
+        }
+      }
+    }
+    @media screen and (max-width: $screen-xs-max) {
+      .col-3 {
+        width: 100%;
+        &:nth-child(2n) {
+          margin-left: 0%;
+        }
+      }      
+    }
+  }
+  .load-more {
+    background: $darkPink;
+    border-radius: 25px;
+    padding: 10px 25px;
+    color: $white;
+    display: inline-block;
+    margin-top: 35px;
+    text-transform: uppercase;
+    @include transition(all 0.5s ease);
+    &:hover,&:focus {
+      background: darken($darkPink, 15%)
+    }
+  }  
+  .item{
+    @include itemBox();
+    position: relative;
+    margin-top: 15px;
+    color: #2a2a33;     
+    font-size: 16px;  
+     @media screen and (max-width: $screen-sm-max) {
+      margin-top: 25px;
+     }  
+    .item-img {  
+      position: relative;
+      height: 265px;
+      background: #000;
+      overflow: hidden;
+      border-radius: 2px 2px 0 0;
+      box-shadow: -3px 0px 5px 11px rgba(0,0,0,0.2) inset;
+      @media screen and (max-width: $screen-lg-max) {
+        height: 248px;
+      }
+      @media screen and (max-width: $screen-md-max) {
+        height:190px;
+      }
+      @media screen and (max-width: $screen-sm-max) {
+        height: 83px;
+        width: 80px;
+        float: left;
+        border-radius: 2px;
+      }
+      @include transition(all 1s ease);
+      >img {
+        opacity: 0.82;
+        @include transition(all 1s ease);
+      }     
+      .artist-icon {
+        background: url(../images/artist-icon.png) no-repeat;
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        left: 14px;
+        bottom: 15px;
+        @include transition(all 1s ease);
+        @media screen and (max-width: $screen-sm-max) {          
+          background-size: 100%;
+          width: 20px;
+          height: 20px;
+          bottom: 7px;
+          left: 10px;
+        }
+      }
+      .album-icon {
+        background: url(../images/album-icon.png) no-repeat;
+        width: 39px;
+        height: 39px;
+        position: absolute;
+        left: 7px;
+        bottom: 7px;
+        @include transition(all 1s ease);
+        @media screen and (max-width: $screen-sm-max) {          
+          background-size: 100%;
+          bottom: 0;
+          width: 25px;
+          height: 25px;
+          left: 5px;
+        }
+      }      
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background: $bg;
+        color: #fff;
+        text-align: center;
+        opacity: 0;
+        @include transition(all 1s ease);
+        img {
+          margin-top: 30%;
+         @include transition(all 1s ease);
+        }
+        p {
+          margin: 5px 0 0;
+        }
+        @media screen and (max-width: $screen-sm-max) {
+          display: none;
+        }
+      }      
+    }
+    .caption {
+      background: $white;
+      border-radius: 0 0 3px 3px;
+      font-weight: 500;
+      padding: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      @media screen and (max-width: $screen-sm-max) {
+        float: left;
+        border-radius: 0 3px 3px 0;
+        padding: 32px 10px;        
+        width: calc( 100% - 100px);
+      }
+    }
+    &:hover {
+      .item-img {  
+        >img {
+            -webkit-filter: blur(5px);
+            filter: blur(5px);    
+        }
+        .overlay {
+          opacity: 1;
+        }
+        .artist-icon,.album-icon {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}
+.no-result{  
+  padding: 5% 0 4%;
+  text-align: center;  
+  p {
+    color: $blue-darker;
+    font-size: 20px;
+  }
+  @media screen and (max-width: $screen-xs-max) {
+    display: none;
+  }
+
+}
+.container {
+  max-width: $container-lg;
+  margin: 0 auto;
+}
+/* ==============================================
+  POPUP CSS
+ ============================================== */
+body.modal-open {
+  overflow: hidden
+}
+.modal-open .popup {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.popup {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: rgba(51,52,65,0.6);    
+} 
+/* Inner */
+.popup-inner {
+    max-width: 750px;
+    width: 100%;
+    padding: 0px;
+    position: relative;
+    margin: 30px auto;
+    top: 50%;
+    left: 0;
+    color: #3a3b46;    
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    border-radius: 3px;
+    background: $white;   
+    @include transition(transform .3s ease-out);
+    @include transform(translate(0,-50%));
+    .header {
+      position: relative;
+    }
+    .img {
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+      position: relative;
+      border-radius: 2px 2px 0 0;
+    }
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background: $bg;
+      color: #fff;
+    }
+    .title {
+      position: absolute;
+      left: 38px;
+      bottom: 30px;
+      color: #fff;
+      font-weight: normal;
+      margin: 0;
+      text-transform: capitalize;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9);
+      span {
+        display: none;
+        color: #a8a9b3;
+        font-size: 18px;
+        font-weight: 300;
+        text-shadow: none;
+        margin-bottom: 5px;
+        line-height: 18px;
+      }
+    }
+    .subtitle {      
+      font-weight: 500;
+      margin: 0;
+      padding: 0 0 25px;
+    }  
+    @media screen and (max-height: $screen-height-max) {
+      @include transform(translate(0,-35%));
+    }  
+    @media screen and (max-width: $screen-sm-max) {
+      margin: 10px;
+      width: calc(100% - 20px);
+      @include transform(translate(0,-25%));
+      .header {
+        padding: 20px 24px;
+      }
+      .img {
+        width: 60px;
+        height: 60px;
+        float: left;
+        margin-right: 10px;
+      }
+      .title {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        float: left;
+        font-size: 18px;
+        text-shadow: none;
+        color: #3a3b46;
+        font-weight: 500;
+        width: 72%;
+        span {
+          display: block;
+        }
+      }
+      .subtitle {
+        display: none;
+      }
+    }
+}
+.popup-body {
+  padding: 25px 30px;
+  .item-list {
+    border-top: 1px solid #f5f5f6;
+    list-style: none;
+    padding: 20px 0 0;
+    margin: 0;
+    li {
+      float: left;
+      width: 100%;      
+    }
+    &.artist {
+      li {
+        margin-bottom: 25px;
+        @media screen and (max-width: $screen-sm-max) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+
+  .thumb-img {
+    float: left;
+    width: 100px;
+    margin-right: 20px;
+  }
+  .item-info{
+    float: left;
+    width: 100%;
+    max-width: 570px;
+  }
+  .album-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 10px 0;
+    text-transform: capitalize;
+    cursor: pointer;
+    &:hover,&:focus{
+      color:$darkPink;
+    }
+  }
+  .year{
+    color: #a2a3ad;
+  }
+  .track-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 10px 0;
+    cursor: pointer;
+    &:hover,&:focus{
+      color:$darkPink;
+    }
+  }
+  .duration {
+    font-size: 16px;
+    color: #6d6f7f;
+  }
+  @media screen and (max-width: $screen-sm-max) {
+    padding: 0 24px 25px;
+    .thumb-img {
+      display: none;
+    }
+    .item-list {
+      padding: 10px 0 0 ;
+    }
+    .album-title {
+      font-size: 18px;
+    }
+  }
+}
+ 
+/* Close Button */
+.popup-close {
+    background: url(../images/close.png) no-repeat;
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    @include transition(ease 0.25s all);   
+    &:hover {
+      opacity:0.8;
+    }
+    @media screen and (max-width: $screen-sm-max) {
+      background: url(../images/close-dark.png) no-repeat;
+      width: 17px;
+      height: 15px;
+      top: 24px;
+      right: 10px;
+    }
+}
+/* ==============================================
+  Footer CSS
+ ============================================== */
+footer {
+  background: $darkBlue;
+  text-align: center;
+  padding: 20px 0;  
+  em {
+    font-style: normal;
+  }
+  @media screen and (max-width: $screen-xs-max) {
+    p {
+      margin: 0;
+    }
+    span {
+      display: block;
+      line-height: 24px;
+    }
+    em { 
+      display: none;
+    }
+  }
+}

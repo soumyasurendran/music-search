@@ -1,0 +1,124 @@
+//
+// Variables
+// --------------------------------------------------
+//== Colors
+//
+//## Gray and brand colors for use across Bootstrap.
+
+$pink: 		   	#ce4283;
+$darkBlue:		#333441;
+$lightkBlue:	#383a49;
+$white:			#ffffff;
+$dark:			#7f6c6c;
+$darkPink:		#d05d84;
+$pinkDark:  	#b2455d;
+$blue-darker: 	#474958;
+$bg: rgba(0, 0, 0, 0.2);
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+//** Background color for `<body>`.
+$body-bg:				#fff;
+$body-font-family:		'Raleway', sans-serif;
+$body-font-size:		14px;
+
+//** Global textual link color.
+$link-color:            $pink;
+//** Link hover color set via `darken()` function.
+$link-hover-color:      darken($link-color, 15%);
+//** Link hover decoration.
+$link-hover-decoration: underline;
+
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+$font-family-base:        'Raleway', sans-serif;
+$font-size-base:          14px;
+
+$font-size-h1:            floor(($font-size-base * 2.6)); // ~36px
+$font-size-h2:            floor(($font-size-base * 2.15)); // ~30px
+$font-size-h3:            ceil(($font-size-base * 1.7)) ; // ~24px
+$font-size-h4:            ceil(($font-size-base * 1.25)); // ~18px
+$font-size-h5:            $font-size-base;
+$font-size-h6:            ceil(($font-size-base * 0.85)); // ~12px
+
+//** Unit-less `line-height` for use in components like buttons.
+$line-height-base:        1.428571429; // 20/14
+//** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+$line-height-computed:    floor(($font-size-base * $line-height-base)); // ~20px
+
+//** By default, this inherits from the `<body>`.
+$headings-font-family:    inherit;
+$headings-font-weight:    500;
+$headings-line-height:    1.1;
+$headings-color:          inherit;
+
+//= Media Query Ranges
+
+$break-xsmall:	480px;
+$break-small:	768px;
+$break-medium:	992px;
+$break-large:	1200px;
+
+$screen-xs-max: ($break-xsmall - 1);
+$screen-sm-max: ($break-small - 1);
+$screen-md-max: ($break-medium - 1);
+$screen-lg-max: ($break-large - 1);
+$screen-height-max: 749px;
+
+//----- Extends
+%clearfix:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+ 
+//----- Grid System
+$grid-spacing: 3%;
+ 
+.row {
+    @extend %clearfix; 
+    & + & {
+        margin-top: $grid-spacing;
+    }
+}
+ 
+[class^="col-"] {
+    float: left;
+    margin-right: $grid-spacing;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
+ 
+    &:last-child {
+        margin-right: 0%;
+    }
+    @media screen and (max-width: $screen-xs-max) {
+    	 margin-right: 0;
+    }
+}
+ 
+//----- Columns (Automatic)
+@media screen and (min-width: $break-small) {
+.col-1   { width:(100% / 12) - ($grid-spacing * 11 / 12); }
+.col-2   { width:(100% / 6) - ($grid-spacing * 10 / 12); }
+.col-3   { width:(100% / 4) - ($grid-spacing * 9 / 12); }
+.col-4   { width:(100% / 3) - ($grid-spacing * 8 / 12); }
+.col-5   { width:(100% / 2.4) - ($grid-spacing * 7 / 12); }
+.col-6   { width:(100% / 2) - ($grid-spacing * 6 / 12); }
+.col-7   { width:(100% / 1.714285714285714) - ($grid-spacing * 5 / 12); }
+.col-8   { width:(100% / 1.5) - ($grid-spacing * 4 / 12); }
+.col-9   { width:(100% / 1.333333333333333) - ($grid-spacing * 3 / 12); }
+.col-10  { width:(100% / 1.2) - ($grid-spacing * 2 / 12); }
+.col-11  { width:(100% / 1.090909090909091) - ($grid-spacing * 1 / 12); }
+.col-12  { width:100%; }
+}
+
+//== Container sizes
+
+$grid-gutter-width:         30px;
+$container-large-desktop:   (1140px + $grid-gutter-width);
+$container-lg:              $container-large-desktop;
